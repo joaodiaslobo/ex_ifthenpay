@@ -1,6 +1,6 @@
 defmodule Ifthenpay.CreditCard do
   @moduledoc """
-  Credit Card payment related functions.
+  Credit Card payments related functions.
 
   ## Configuration
 
@@ -47,7 +47,11 @@ defmodule Ifthenpay.CreditCard do
   def request_new_credit_card_payment(data) do
     Utils.check_required_fields(data, [:orderid, :amount])
 
-    case Ifthenpay.request_with_body(:post,  generate_endpoint(), include_credit_card_callbacks(data)) do
+    case Ifthenpay.request_with_body(
+           :post,
+           generate_endpoint(),
+           include_credit_card_callbacks(data)
+         ) do
       {:ok, response} ->
         if Map.has_key?(response, :status) do
           case response.status do
